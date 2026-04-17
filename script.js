@@ -24,7 +24,7 @@ if (page.includes("countries")) {
 
   function show(data) {
     box.innerHTML = data.map(c => `
-      <div onclick="go('${encodeURIComponent(c.name.common)}')">
+      <div onclick="showDetails('${encodeURIComponent(c.name.common)}')">
         <img src="${c.flags.png}">
         <p>${c.name.common}</p>
         <p>Capital: ${c.capital?.[0] || "N/A"}</p>
@@ -41,36 +41,6 @@ if (page.includes("countries")) {
   };
 }
 
-/* ---------- DETAILS PAGE ---------- */
-if (page.includes("country")) {
-  const box = document.getElementById("country-details");
-  const loading = document.getElementById("loading");
-
-  const name = new URLSearchParams(location.search).get("name");
-
-  fetch(`https://restcountries.com/v3.1/name/${name}`)
-    .then(res => res.json())
-    .then(data => {
-      const c = data[0];
-      loading.style.display = "none";
-
-      box.innerHTML = `
-        <img src="${c.flags.png}">
-        <h2>${c.name.common}</h2>
-        <p>Capital: ${c.capital?.[0] || "N/A"}</p>
-        <p>Region: ${c.region}</p>
-      `;
-    })
-    .catch(() => {
-      loading.innerText = "Failed to load";
-    });
-}
-
-/* ---------- NAVIGATION ---------- */
-function go(name) {
-  location.href = `country.html?name=${name}`;
-}
-
 /* ---------- TESTABLE FUNCTION ---------- */
 function getCountryHTML(data) {
   return data.map(c => `
@@ -80,6 +50,25 @@ function getCountryHTML(data) {
       <p>Region: ${c.region}</p>
     </div>
   `).join("");
+}
+
+function showDetails(name) {
+  const box = document.getElementById("details");
+  if (!box) return;
+  box.innerHTML = "Loading...";
+
+  fetch(`https://restcountries.com/v3.1/name/${name}`)
+    .then(res => res.json())
+    .then(data => {
+      const c = data[0];
+
+      box.innerHTML = `
+        <h2>${c.name.common}</h2>
+        <img src="${c.flags.png}" width="100">
+        <p>Capital: ${c.capital?.[0] || "N/A"}</p>
+        <p>Region: ${c.region}</p>
+      `;
+    });
 }
 
 /* ---------- EXPORT FOR TESTS ---------- */
