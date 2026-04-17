@@ -24,7 +24,7 @@ if (page.includes("countries")) {
 
   function show(data) {
     box.innerHTML = data.map(c => `
-      <div onclick="go('${c.name.common}')">
+      <div onclick="go('${encodeURIComponent(c.name.common)}')">
         <img src="${c.flags.png}">
         <p>${c.name.common}</p>
         <p>Capital: ${c.capital?.[0] || "N/A"}</p>
@@ -68,7 +68,7 @@ if (page.includes("country")) {
 
 /* ---------- NAVIGATION ---------- */
 function go(name) {
-  location.href = "country.html?name=" + encodeURIComponent(name);
+  location.href = `country.html?name=${name}`;
 }
 
 /* ---------- TESTABLE FUNCTION ---------- */
