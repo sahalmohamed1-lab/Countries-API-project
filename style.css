@@ -1,4 +1,5 @@
 title {
+    font-family: "Montserrat", sans-serif;
     color: black;
     background-color: antiquewhite;
     margin: auto;
@@ -6,17 +7,22 @@ title {
     font-size: larger;
 }
 body {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Poppins", sans-serif;
     background-color: black;
     text-align: center;
     color: white;
 }
+p {
+    font-family: "Roboto", sans-serif;
+}
 h1 {
+    font-family: "Montserrat", sans-serif;
     color: white;
     margin-top: 1em;
     font-size: 2em;
 }
 nav {
+    font-family: "Montserrat", sans-serif;
     justify-content: center;
     display: flex;
     background-color: paleturquoise;
@@ -49,7 +55,10 @@ footer {
 }
 input {
   width: 50%;
+  max-width: 400px;
   padding: 1em;
+  margin: 1rem auto;
+  display: block;
   border: 1px solid #ccc;
   border-radius: 1em;
   margin-bottom: 1em;
@@ -88,6 +97,14 @@ input:focus {
 #countries div {
   max-width: 220px;
   margin: auto;
+}
+#details {
+  margin: 20px auto;
+  padding: 15px;
+  max-width: 350px;
+  background: black;
+  color: white;
+  border-radius: 10px;
 }
 @media (max-width: 600px) {
 }
