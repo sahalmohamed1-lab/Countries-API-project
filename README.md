@@ -26,7 +26,7 @@
 
 ## API used
 > REST countries API  https://restcountries.com/
-> Data used:
+- Data used:
 - Country Name
 - Country flag
 - Capital city
