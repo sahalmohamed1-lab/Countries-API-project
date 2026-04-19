@@ -25,9 +25,7 @@
 ```
 
 ## API used
-> REST countries API 
-```bash https://restcountries.com/
-```
+> REST countries API  https://restcountries.com/
 > Data used:
 - Country Name
 - Country flag
