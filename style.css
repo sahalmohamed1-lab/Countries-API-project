@@ -1,5 +1,5 @@
 title {
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     color: black;
     background-color: antiquewhite;
     margin: auto;
@@ -7,22 +7,22 @@ title {
     font-size: larger;
 }
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: black;
     text-align: center;
     color: white;
 }
 p {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Courier New', Courier, monospace;
 }
 h1 {
-    font-family: "Montserrat", sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
     margin-top: 1em;
     font-size: 2em;
 }
 nav {
-    font-family: "Montserrat", sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     justify-content: center;
     display: flex;
     background-color: paleturquoise;
