@@ -1,5 +1,6 @@
 const API = "https://restcountries.com/v3.1/all?fields=name,capital,flags,region"
 
+if (typeof document !== "undefined") {
 const countriesBox = document.getElementById("countries");
 const searchInput = document.getElementById("search");
 const loadingText = document.getElementById("loading");
@@ -64,8 +65,9 @@ function showDetails(name) {
     detailsBox.textContent = "Failed to load details";
   });
 }
+}
 
-function getCountry(data) {
+function getCountryHTML(data) {
   return data.map(oneCountry => `
     <div>
      <h3>${oneCountry.name.common}</h3>
@@ -73,4 +75,8 @@ function getCountry(data) {
      <p>Region: ${oneCountry.region}</p>
      </div>
      `).join("");
+  }
+
+  if (typeof module !== "undefined") {
+    module.exports = {getCountryHTML};
   }
