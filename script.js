@@ -1,77 +1,76 @@
-const API = "https://restcountries.com/v3.1/all?fields=name,capital,flags,region";
-const page = typeof location !== "undefined"
-  ? location.pathname
-  : "";
+const API = "https://restcountries.com/v3.1/all?fields=name,capital,flags,region"
 
-/* ---------- COUNTRIES PAGE ---------- */
-if (page.includes("countries")) {
-  const box = document.getElementById("countries");
-  const search = document.getElementById("search");
-  const loading = document.getElementById("loading");
+const countriesBox = document.getElementById("countries");
+const searchInput = document.getElementById("search");
+const loadingText = document.getElementById("loading");
+const detailsBox = document.getElementById("details");
 
-  let countries = [];
+let countries = [];
 
-  fetch(API)
-    .then(res => res.json())
-    .then(data => {
-      countries = data;
-      loading.style.display = "none";
-      show(data);
+fetch(API)
+.then(response => response.json())
+.then(data => {
+  countries = data;
+  displayCountries(countries);
+})
+.catch(() => {
+  loadingText.textContent = "Failed to load"
+});
+
+function displayCountries(list) {
+  countriesBox.innerHTML = "";
+  list.forEach(country => {
+    const card = document.createElement("div");
+
+    card.innerHTML = `
+    <img src="${country.flags.png}">
+    <p>${country.name.common}</p>
+    <p>Capital: ${country.capital}</p>
+    <p>Region: ${country.region}</p>
+    `;
+
+    card.addEventListener("click", () => {
+      showDetails(country.name.common);
     })
-    .catch(() => {
-      loading.innerText = "Failed to load";
-    });
-
-  function show(data) {
-    box.innerHTML = data.map(c => `
-      <div onclick="showDetails('${encodeURIComponent(c.name.common)}')">
-        <img src="${c.flags.png}">
-        <p>${c.name.common}</p>
-        <p>Capital: ${c.capital?.[0] || "N/A"}</p>
-        <p>Region: ${c.region}</p>
-      </div>
-    `).join("");
-  }
-
-  search.oninput = e => {
-    const value = e.target.value.toLowerCase();
-    show(countries.filter(c =>
-      c.name.common.toLowerCase().includes(value)
-    ));
-  };
+    countriesBox.appendChild(card);
+  });
 }
 
-/* ---------- TESTABLE FUNCTION ---------- */
-function getCountryHTML(data) {
-  return data.map(c => `
-    <div>
-      <h3>${c.name.common}</h3>
-      <p>Capital: ${c.capital?.[0] || "N/A"}</p>
-      <p>Region: ${c.region}</p>
-    </div>
-  `).join("");
-}
+searchInput.addEventListener("input", () => {
+  const value = searchInput.value.toLowerCase();
+
+  const filtered = countries.filter(country => country.name.common.toLowerCase().includes(value)
+);
+  
+displayCountries(filtered);
+});
 
 function showDetails(name) {
-  const box = document.getElementById("details");
-  if (!box) return;
-  box.innerHTML = "Loading...";
+  detailsBox.innerHTML = "loading...";
 
-  fetch(`https://restcountries.com/v3.1/name/${name}`)
-    .then(res => res.json())
-    .then(data => {
-      const c = data[0];
+  fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(name)}`)
+  .then(response => response.json())
+  .then(data => {
+    const oneCountry = data[0];
 
-      box.innerHTML = `
-        <h2>${c.name.common}</h2>
-        <img src="${c.flags.png}" width="100">
-        <p>Capital: ${c.capital?.[0] || "N/A"}</p>
-        <p>Region: ${c.region}</p>
-      `;
-    });
+    detailsBox.innerHTML = `
+    <h2>${oneCountry.name.common}</h2>
+    <img src="${oneCountry.flags.png}" width = "100">
+    <p>Capital: ${oneCountry.capital}</p>
+    <p>Region: ${oneCountry.region}</p>
+    `;
+  })
+  .catch(() => {
+    detailsBox.textContent = "Failed to load details";
+  });
 }
 
-/* ---------- EXPORT FOR TESTS ---------- */
-if (typeof module !== "undefined") {
-  module.exports = { getCountryHTML };
-}
+function getCountry(data) {
+  return data.map(oneCountry => `
+    <div>
+     <h3>${oneCountry.name.common}</h3>
+     <p>Capital: ${oneCountry.capital}</p>
+     <p>Region: ${oneCountry.region}</p>
+     </div>
+     `).join("");
+  }
